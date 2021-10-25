@@ -14,6 +14,6 @@
 //  limitations under the License.
 //
 
-#error Fill in #define values and delete this line
+// #error Fill in #define values and delete this line
 #define TESTACCOUNT @"ACCOUNT HERE"
 #define TESTPASSWORD @"PASSWORD HERE"
