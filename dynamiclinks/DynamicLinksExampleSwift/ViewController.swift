@@ -99,98 +99,98 @@ class ViewController: UITableViewController {
   }
 
   @objc func buildFDLLink() {
-    if ViewController.DOMAIN_URI_PREFIX == "YOUR_DOMAIN_URI_PREFIX" {
-      fatalError("Please update DOMAIN_URI_PREFIX constant in your code from Firebase Console!")
-    }
-    // [START buildFDLLink]
-    // general link params
-    guard let linkString = dictionary[.link]?.text else {
-      print("Link can not be empty!")
-      return
-    }
-
-    guard let link = URL(string: linkString) else { return }
-    guard let components = DynamicLinkComponents(
-      link: link,
-      domainURIPrefix: ViewController.DOMAIN_URI_PREFIX
-    ) else { return }
-
-    // analytics params
-    let analyticsParams = DynamicLinkGoogleAnalyticsParameters(
-      source: dictionary[.source]?.text ?? "", medium: dictionary[.medium]?.text ?? "",
-      campaign: dictionary[.campaign]?.text ?? ""
-    )
-    analyticsParams.term = dictionary[.term]?.text
-    analyticsParams.content = dictionary[.content]?.text
-    components.analyticsParameters = analyticsParams
-
-    if let bundleID = dictionary[.bundleID]?.text {
-      // iOS params
-      let iOSParams = DynamicLinkIOSParameters(bundleID: bundleID)
-      iOSParams.fallbackURL = dictionary[.fallbackURL]?.text.flatMap(URL.init)
-      iOSParams.minimumAppVersion = dictionary[.minimumAppVersion]?.text
-      iOSParams.customScheme = dictionary[.customScheme]?.text
-      iOSParams.iPadBundleID = dictionary[.iPadBundleID]?.text
-      iOSParams.iPadFallbackURL = dictionary[.iPadFallbackURL]?.text.flatMap(URL.init)
-      iOSParams.appStoreID = dictionary[.appStoreID]?.text
-      components.iOSParameters = iOSParams
-
-      // iTunesConnect params
-      let appStoreParams = DynamicLinkItunesConnectAnalyticsParameters()
-      appStoreParams.affiliateToken = dictionary[.affiliateToken]?.text
-      appStoreParams.campaignToken = dictionary[.campaignToken]?.text
-      appStoreParams.providerToken = dictionary[.providerToken]?.text
-      components.iTunesConnectParameters = appStoreParams
-    }
-
-    if let packageName = dictionary[.packageName]?.text {
-      // Android params
-      let androidParams = DynamicLinkAndroidParameters(packageName: packageName)
-      androidParams.fallbackURL = dictionary[.androidFallbackURL]?.text.flatMap(URL.init)
-      androidParams.minimumVersion = dictionary[.minimumVersion]?.text.flatMap { Int($0) } ?? 0
-      components.androidParameters = androidParams
-    }
-
-    // social tag params
-    let socialParams = DynamicLinkSocialMetaTagParameters()
-    socialParams.title = dictionary[.title]?.text
-    socialParams.descriptionText = dictionary[.descriptionText]?.text
-    socialParams.imageURL = dictionary[.imageURL]?.text.flatMap(URL.init)
-    components.socialMetaTagParameters = socialParams
-
-    // OtherPlatform params
-    let otherPlatformParams = DynamicLinkOtherPlatformParameters()
-    otherPlatformParams.fallbackUrl = dictionary[.otherFallbackURL]?.text.flatMap(URL.init)
-    components.otherPlatformParameters = otherPlatformParams
-
-    longLink = components.url
-    print(longLink?.absoluteString ?? "")
-    // [END buildFDLLink]
-
-    // Handle longURL.
-    tableView.reloadRows(at: [IndexPath(row: 0, section: 2)], with: .none)
-
-    // [START shortLinkOptions]
-    let options = DynamicLinkComponentsOptions()
-    options.pathLength = .unguessable
-    components.options = options
-    // [END shortLinkOptions]
-
-    // [START shortenLink]
-    components.shorten { shortURL, warnings, error in
-      // Handle shortURL.
-      if let error = error {
-        print(error.localizedDescription)
-        return
-      }
-      print(shortURL?.absoluteString ?? "")
-      // [START_EXCLUDE]
-      self.shortLink = shortURL
-      self.tableView.reloadRows(at: [IndexPath(row: 1, section: 2)], with: .none)
-      // [END_EXCLUDE]
-    }
-    // [END shortenLink]
-  }
+//    if ViewController.DOMAIN_URI_PREFIX == "YOUR_DOMAIN_URI_PREFIX" {
+//      fatalError("Please update DOMAIN_URI_PREFIX constant in your code from Firebase Console!")
+//    }
+//    // [START buildFDLLink]
+//    // general link params
+//    guard let linkString = dictionary[.link]?.text else {
+//      print("Link can not be empty!")
+//      return
+//    }
+//
+//    guard let link = URL(string: linkString) else { return }
+//    guard let components = DynamicLinkComponents(
+//      link: link,
+//      domainURIPrefix: ViewController.DOMAIN_URI_PREFIX
+//    ) else { return }
+//
+//    // analytics params
+//    let analyticsParams = DynamicLinkGoogleAnalyticsParameters(
+//      source: dictionary[.source]?.text ?? "", medium: dictionary[.medium]?.text ?? "",
+//      campaign: dictionary[.campaign]?.text ?? ""
+//    )
+//    analyticsParams.term = dictionary[.term]?.text
+//    analyticsParams.content = dictionary[.content]?.text
+//    components.analyticsParameters = analyticsParams
+//
+//    if let bundleID = dictionary[.bundleID]?.text {
+//      // iOS params
+//      let iOSParams = DynamicLinkIOSParameters(bundleID: bundleID)
+//      iOSParams.fallbackURL = dictionary[.fallbackURL]?.text.flatMap(URL.init)
+//      iOSParams.minimumAppVersion = dictionary[.minimumAppVersion]?.text
+//      iOSParams.customScheme = dictionary[.customScheme]?.text
+//      iOSParams.iPadBundleID = dictionary[.iPadBundleID]?.text
+//      iOSParams.iPadFallbackURL = dictionary[.iPadFallbackURL]?.text.flatMap(URL.init)
+//      iOSParams.appStoreID = dictionary[.appStoreID]?.text
+//      components.iOSParameters = iOSParams
+//
+//      // iTunesConnect params
+//      let appStoreParams = DynamicLinkItunesConnectAnalyticsParameters()
+//      appStoreParams.affiliateToken = dictionary[.affiliateToken]?.text
+//      appStoreParams.campaignToken = dictionary[.campaignToken]?.text
+//      appStoreParams.providerToken = dictionary[.providerToken]?.text
+//      components.iTunesConnectParameters = appStoreParams
+//    }
+//
+//    if let packageName = dictionary[.packageName]?.text {
+//      // Android params
+//      let androidParams = DynamicLinkAndroidParameters(packageName: packageName)
+//      androidParams.fallbackURL = dictionary[.androidFallbackURL]?.text.flatMap(URL.init)
+//      androidParams.minimumVersion = dictionary[.minimumVersion]?.text.flatMap { Int($0) } ?? 0
+//      components.androidParameters = androidParams
+//    }
+//
+//    // social tag params
+//    let socialParams = DynamicLinkSocialMetaTagParameters()
+//    socialParams.title = dictionary[.title]?.text
+//    socialParams.descriptionText = dictionary[.descriptionText]?.text
+//    socialParams.imageURL = dictionary[.imageURL]?.text.flatMap(URL.init)
+//    components.socialMetaTagParameters = socialParams
+//
+//    // OtherPlatform params
+//    let otherPlatformParams = DynamicLinkOtherPlatformParameters()
+//    otherPlatformParams.fallbackUrl = dictionary[.otherFallbackURL]?.text.flatMap(URL.init)
+//    components.otherPlatformParameters = otherPlatformParams
+//
+//    longLink = components.url
+//    print(longLink?.absoluteString ?? "")
+//    // [END buildFDLLink]
+//
+//    // Handle longURL.
+//    tableView.reloadRows(at: [IndexPath(row: 0, section: 2)], with: .none)
+//
+//    // [START shortLinkOptions]
+//    let options = DynamicLinkComponentsOptions()
+//    options.pathLength = .unguessable
+//    components.options = options
+//    // [END shortLinkOptions]
+//
+//    // [START shortenLink]
+//    components.shorten { shortURL, warnings, error in
+//      // Handle shortURL.
+//      if let error = error {
+//        print(error.localizedDescription)
+//        return
+//      }
+//      print(shortURL?.absoluteString ?? "")
+//      // [START_EXCLUDE]
+//      self.shortLink = shortURL
+//      self.tableView.reloadRows(at: [IndexPath(row: 1, section: 2)], with: .none)
+//      // [END_EXCLUDE]
+//    }
+//    // [END shortenLink]
+//  }
 }
 
 //

@@ -98,106 +98,106 @@ static NSString *const DOMAIN_URI_PREFIX = @"YOUR_DOMAIN_URI_PREFIX";
 }
 
 - (void)buildFDLLink {
-  if ([DOMAIN_URI_PREFIX  isEqual: @"YOUR_DOMAIN_URI_PREFIX"]) {
-    [NSException raise:@"DOMAIN_URI_PREFIX"
-                format:@"%@",
-     @"Please update DOMAIN_URI_PREFIX constant in your code from Firebase Console!"];
-  }
-  // [START buildFDLLink]
-  // general link params
-  if (_dictionary[Link].text == nil) {
-    NSLog(@"%@", @"Link can not be empty!");
-    return;
-  }
-
-  NSURL *link = [NSURL URLWithString:_dictionary[Link].text];
-  FIRDynamicLinkComponents *components =
-  [FIRDynamicLinkComponents componentsWithLink:link domainURIPrefix:DOMAIN_URI_PREFIX];
-
-  // analytics params
-  FIRDynamicLinkGoogleAnalyticsParameters *analyticsParams =
-  [FIRDynamicLinkGoogleAnalyticsParameters parametersWithSource:_dictionary[Source].text
-                                                         medium:_dictionary[Medium].text
-                                                       campaign:_dictionary[Campaign].text];
-  analyticsParams.term = _dictionary[Term].text;
-  analyticsParams.content = _dictionary[Content].text;
-  components.analyticsParameters = analyticsParams;
-
-  if (_dictionary[BundleID].text) {
-    // iOS params
-    FIRDynamicLinkIOSParameters *iOSParams = [FIRDynamicLinkIOSParameters parametersWithBundleID:_dictionary[BundleID].text];
-    iOSParams.fallbackURL = [NSURL URLWithString:_dictionary[FallbackURL].text];
-    iOSParams.minimumAppVersion = _dictionary[MinimumAppVersion].text;
-    iOSParams.customScheme = _dictionary[CustomScheme].text;
-    iOSParams.iPadBundleID = _dictionary[IPadBundleID].text;
-    iOSParams.iPadFallbackURL = [NSURL URLWithString:_dictionary[IPadFallbackURL].text];
-    iOSParams.appStoreID = _dictionary[AppStoreID].text;
-    components.iOSParameters = iOSParams;
-
-    // iTunesConnect params
-    FIRDynamicLinkItunesConnectAnalyticsParameters *appStoreParams = [FIRDynamicLinkItunesConnectAnalyticsParameters parameters];
-    appStoreParams.affiliateToken = _dictionary[AffiliateToken].text;
-    appStoreParams.campaignToken = _dictionary[CampaignToken].text;
-    appStoreParams.providerToken = _dictionary[ProviderToken].text;
-    components.iTunesConnectParameters = appStoreParams;
-  }
-
-  if (_dictionary[PackageName].text) {
-    // Android params
-    FIRDynamicLinkAndroidParameters *androidParams = [FIRDynamicLinkAndroidParameters parametersWithPackageName: _dictionary[PackageName].text];
-    androidParams.fallbackURL = [NSURL URLWithString:_dictionary[FallbackURL].text];
-    androidParams.minimumVersion = (_dictionary[MinimumVersion].text).integerValue;
-    components.androidParameters = androidParams;
-  }
-
-  // social tag params
-  FIRDynamicLinkSocialMetaTagParameters *socialParams = [FIRDynamicLinkSocialMetaTagParameters parameters];
-  socialParams.title = _dictionary[Title].text;
-  socialParams.descriptionText = _dictionary[DescriptionText].text;
-  socialParams.imageURL = [NSURL URLWithString:_dictionary[ImageURL].text];
-  components.socialMetaTagParameters = socialParams;
-
-  // OtherPlatform params
-  FIRDynamicLinkOtherPlatformParameters *otherPlatformParams =
-  [FIRDynamicLinkOtherPlatformParameters parameters];
-  otherPlatformParams.fallbackUrl = [NSURL URLWithString:_dictionary[OtherFallbackURL].text];
-  components.otherPlatformParameters = otherPlatformParams;
-
-  _longLink = components.url;
-  NSLog(@"Long URL: %@", _longLink.absoluteString);
-  // [END buildFDLLink]
-
-  // Handle longURL.
-  [self.tableView reloadRowsAtIndexPaths:@[
-                                           [NSIndexPath indexPathForRow:0 inSection:2]
-                                           ]
-                        withRowAnimation:UITableViewRowAnimationNone];
-
-  // [START shortLinkOptions]
-  FIRDynamicLinkComponentsOptions *options = [FIRDynamicLinkComponentsOptions options];
-  options.pathLength = FIRShortDynamicLinkPathLengthUnguessable;
-  components.options = options;
-  // [END shortLinkOptions]
-
-  // [START shortenLink]
-  [components shortenWithCompletion:^(NSURL *_Nullable shortURL,
-                                      NSArray *_Nullable warnings,
-                                      NSError *_Nullable error) {
-    // Handle shortURL or error.
-    if (error) {
-      NSLog(@"Error generating short link: %@", error.description);
-      return;
-    }
-    NSLog(@"Short URL: %@", shortURL.absoluteString);
-    // [START_EXCLUDE]
-    self->_shortLink = shortURL;
-    [self.tableView reloadRowsAtIndexPaths:@[
-                                             [NSIndexPath indexPathForRow:1 inSection:2]
-                                             ]
-                          withRowAnimation:UITableViewRowAnimationNone];
-    // [END_EXCLUDE]
-  }];
-  // [END shortenLink]
+//  if ([DOMAIN_URI_PREFIX  isEqual: @"YOUR_DOMAIN_URI_PREFIX"]) {
+//    [NSException raise:@"DOMAIN_URI_PREFIX"
+//                format:@"%@",
+//     @"Please update DOMAIN_URI_PREFIX constant in your code from Firebase Console!"];
+//  }
+//  // [START buildFDLLink]
+//  // general link params
+//  if (_dictionary[Link].text == nil) {
+//    NSLog(@"%@", @"Link can not be empty!");
+//    return;
+//  }
+//
+//  NSURL *link = [NSURL URLWithString:_dictionary[Link].text];
+//  FIRDynamicLinkComponents *components =
+//  [FIRDynamicLinkComponents componentsWithLink:link domainURIPrefix:DOMAIN_URI_PREFIX];
+//
+//  // analytics params
+////  FIRDynamicLinkGoogleAnalyticsParameters *analyticsParams =
+////  [FIRDynamicLinkGoogleAnalyticsParameters parametersWithSource:_dictionary[Source].text
+////                                                         medium:_dictionary[Medium].text
+////                                                       campaign:_dictionary[Campaign].text];
+////  analyticsParams.term = _dictionary[Term].text;
+////  analyticsParams.content = _dictionary[Content].text;
+////  components.analyticsParameters = analyticsParams;
+//
+//  if (_dictionary[BundleID].text) {
+//    // iOS params
+//    FIRDynamicLinkIOSParameters *iOSParams = [FIRDynamicLinkIOSParameters parametersWithBundleID:_dictionary[BundleID].text];
+//    iOSParams.fallbackURL = [NSURL URLWithString:_dictionary[FallbackURL].text];
+//    iOSParams.minimumAppVersion = _dictionary[MinimumAppVersion].text;
+//    iOSParams.customScheme = _dictionary[CustomScheme].text;
+//    iOSParams.iPadBundleID = _dictionary[IPadBundleID].text;
+//    iOSParams.iPadFallbackURL = [NSURL URLWithString:_dictionary[IPadFallbackURL].text];
+//    iOSParams.appStoreID = _dictionary[AppStoreID].text;
+//    components.iOSParameters = iOSParams;
+//
+//    // iTunesConnect params
+////    FIRDynamicLinkItunesConnectAnalyticsParameters *appStoreParams = [FIRDynamicLinkItunesConnectAnalyticsParameters parameters];
+//    appStoreParams.affiliateToken = _dictionary[AffiliateToken].text;
+//    appStoreParams.campaignToken = _dictionary[CampaignToken].text;
+//    appStoreParams.providerToken = _dictionary[ProviderToken].text;
+//    components.iTunesConnectParameters = appStoreParams;
+//  }
+//
+//  if (_dictionary[PackageName].text) {
+//    // Android params
+//    FIRDynamicLinkAndroidParameters *androidParams = [FIRDynamicLinkAndroidParameters parametersWithPackageName: _dictionary[PackageName].text];
+//    androidParams.fallbackURL = [NSURL URLWithString:_dictionary[FallbackURL].text];
+//    androidParams.minimumVersion = (_dictionary[MinimumVersion].text).integerValue;
+//    components.androidParameters = androidParams;
+//  }
+//
+//  // social tag params
+//  FIRDynamicLinkSocialMetaTagParameters *socialParams = [FIRDynamicLinkSocialMetaTagParameters parameters];
+//  socialParams.title = _dictionary[Title].text;
+//  socialParams.descriptionText = _dictionary[DescriptionText].text;
+//  socialParams.imageURL = [NSURL URLWithString:_dictionary[ImageURL].text];
+//  components.socialMetaTagParameters = socialParams;
+//
+//  // OtherPlatform params
+//  FIRDynamicLinkOtherPlatformParameters *otherPlatformParams =
+//  [FIRDynamicLinkOtherPlatformParameters parameters];
+//  otherPlatformParams.fallbackUrl = [NSURL URLWithString:_dictionary[OtherFallbackURL].text];
+//  components.otherPlatformParameters = otherPlatformParams;
+//
+//  _longLink = components.url;
+//  NSLog(@"Long URL: %@", _longLink.absoluteString);
+//  // [END buildFDLLink]
+//
+//  // Handle longURL.
+//  [self.tableView reloadRowsAtIndexPaths:@[
+//                                           [NSIndexPath indexPathForRow:0 inSection:2]
+//                                           ]
+//                        withRowAnimation:UITableViewRowAnimationNone];
+//
+//  // [START shortLinkOptions]
+//  FIRDynamicLinkComponentsOptions *options = [FIRDynamicLinkComponentsOptions options];
+//  options.pathLength = FIRShortDynamicLinkPathLengthUnguessable;
+//  components.options = options;
+//  // [END shortLinkOptions]
+//
+//  // [START shortenLink]
+//  [components shortenWithCompletion:^(NSURL *_Nullable shortURL,
+//                                      NSArray *_Nullable warnings,
+//                                      NSError *_Nullable error) {
+//    // Handle shortURL or error.
+//    if (error) {
+//      NSLog(@"Error generating short link: %@", error.description);
+//      return;
+//    }
+//    NSLog(@"Short URL: %@", shortURL.absoluteString);
+//    // [START_EXCLUDE]
+//    self->_shortLink = shortURL;
+//    [self.tableView reloadRowsAtIndexPaths:@[
+//                                             [NSIndexPath indexPathForRow:1 inSection:2]
+//                                             ]
+//                          withRowAnimation:UITableViewRowAnimationNone];
+//    // [END_EXCLUDE]
+//  }];
+//  // [END shortenLink]
 }
 
 #pragma mark - View Controller DataSource and Delegate
